@@ -20,7 +20,35 @@ class Parser {
     }
   }
 
-  private Expr expression() { return equality(); }
+  private Expr expression() { return block(); }
+
+  private Expr block() {
+    Expr left = ternary();
+
+    while (match(COMMA)) {
+      left = ternary();
+    }
+
+    return left;
+  }
+
+  private Expr ternary() {
+    Expr left = equality();
+
+    if (match(QUESTION_MARK)) {
+      Token token = previous();
+      Expr thenArm = equality();
+
+      if (!match(COLON)) {
+        throw error(peek(), "Expected ':'");
+      }
+
+      Expr elseArm = equality();
+      return new Expr.Ternary(token, left, thenArm, elseArm);
+    }
+
+    return left;
+  }
 
   private Expr equality() {
     Expr left = comparison();
@@ -158,6 +186,8 @@ class Parser {
       case PRINT:
       case RETURN:
         return;
+      default:
+        break;
       }
 
       advance();

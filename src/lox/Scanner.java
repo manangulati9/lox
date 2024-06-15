@@ -48,8 +48,15 @@ class Scanner {
     return tokens;
   }
 
+  void printTokens() {
+    for (Token token : tokens) {
+      System.out.print(token + "\n");
+    }
+  }
+
   private void scanToken() {
     char c = advance();
+
     switch (c) {
     case '(':
       addToken(LEFT_PAREN);
@@ -80,6 +87,12 @@ class Scanner {
       break;
     case '*':
       addToken(STAR);
+      break;
+    case '?':
+      addToken(QUESTION_MARK);
+      break;
+    case ':':
+      addToken(COLON);
       break;
     case '!':
       addToken(match('=') ? BANG_EQUAL : BANG);
@@ -119,7 +132,7 @@ class Scanner {
       } else if (isAlpha(c)) {
         addKeywordOrIdentifier();
       } else {
-        Lox.error(line, "Unexpected character.");
+        Lox.error(line, start, "Unexpected character.");
       }
       break;
     }
@@ -149,7 +162,7 @@ class Scanner {
     }
 
     if (isAtEnd()) {
-      Lox.error(line, "Unterminated string.");
+      Lox.error(line, start, "Unterminated string.");
       return;
     }
 
@@ -196,7 +209,7 @@ class Scanner {
   private boolean match(char expected) {
     if (isAtEnd())
       return false;
-    if (source.charAt(current + 1) != expected)
+    if (source.charAt(current) != expected)
       return false;
 
     current++;

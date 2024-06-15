@@ -2,16 +2,20 @@
 
 ## Syntax Rules
 
-**expression**     → **equality** ;
+**expression** → **block**
 
-**equality**       → **comparison** ( ( != | == ) **comparison** )* ;
+**block** → **ternary** ( , **ternary** )*
 
-**comparison**     → **term** ( ( > | >= | < | <= ) **term** )* ;
+**ternary** → **equality** ? **equality** : **equality** | **equality**
 
-**term**           → **factor** ( ( - | + ) **factor** )* ;
+**equality** → **comparison** ( ( != | == ) **comparison** )*
 
-**factor**         → **unary** ( ( / | * ) **unary** )* ;
+**comparison** → **term** ( ( > | >= | < | <= ) **term** )*
 
-**unary**          → ( ! | - ) **unary** | **primary** ;
+**term** → **factor** ( ( - | + ) **factor** )*
 
-**primary**        → NUMBER | STRING | true | false | nil | ( **expression** ) ;
+**factor** → **unary** ( ( / | * ) **unary** )*
+
+**unary** → ( ! | - ) **unary** | **primary**
+
+**primary** → NUMBER | STRING | true | false | nil | ( **expression** )

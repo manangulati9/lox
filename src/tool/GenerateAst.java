@@ -14,6 +14,8 @@ public class GenerateAst {
     String outputDir = args[0];
     defineAst(outputDir, "Expr",
               Arrays.asList("Binary   : Expr left, Token operator, Expr right",
+                            "Ternary : Token ternary_token, Expr comparison, " +
+                            "Expr true_expr, Expr false_expr",
                             "Grouping : Expr expression",
                             "Literal  : Object value",
                             "Unary    : Token operator, Expr right"));
@@ -38,7 +40,6 @@ public class GenerateAst {
       writer.println();
     }
     // The base accept() method.
-    writer.println();
     writer.println("  abstract <R> R accept(Visitor<R> visitor);");
     writer.println("}");
     writer.close();
@@ -89,5 +90,6 @@ public class GenerateAst {
     }
 
     writer.println("  }");
+    writer.println();
   }
 }
