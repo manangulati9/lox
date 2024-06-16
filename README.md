@@ -30,32 +30,24 @@ git clone https://github.com/yourusername/lox.git
 cd lox
 ```
 
-### Compile the Lox class
-
-```bash
-javac src/lox/Lox.java
-```
-
-This will compile the project and prepare it for use.
-
 ## Usage
 
 You can run Lox in two modes: interactive (REPL) and script mode.
 
 ### Interactive Mode (REPL)
 
-To start the interactive shell, use the following command:
+To start the interactive shell, just run the bash script:
 
 ```bash
-java -cp build/classes/java/main Lox
+scripts/run.sh
 ```
 
 ### Script Mode
 
-To execute a Lox script, provide the script file as an argument:
+To execute a Lox script, run the compile script with a lox script.
 
 ```bash
-java -cp build/classes/java/main src.lox.Lox path/to/script.lox
+scripts/compile.sh path/to/script.lox
 ```
 
 ## Examples
@@ -105,7 +97,9 @@ if (x > 5) {
 ### Directory Structure
 
 - **src/lox:** Contains the main source code.
-- **scripts:** Contains example Lox scripts.
+- **src/tool:** Contains handy dev tool scripts.
+- **bin:** Contains dev bash scripts.
+- **scripts:** Contains test Lox scripts.
 
 ## Contributing
 

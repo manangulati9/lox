@@ -2,20 +2,34 @@
 
 ## Syntax Rules
 
-**expression** → **block**
+**program** → **declaration*** EOF
 
-**block** → **ternary** ( , **ternary** )*
+**declaration** → **varDecl** | **statement**
 
-**ternary** → **equality** ? **equality** : **equality** | **equality**
+**varDecl** → "var" IDENTIFIER ( "=" **expression** )? ";"
 
-**equality** → **comparison** ( ( != | == ) **comparison** )*
+**statement** → **exprStmt** | **printStmt** | **block**
 
-**comparison** → **term** ( ( > | >= | < | <= ) **term** )*
+**block** → "{" **declaration*** "}"
 
-**term** → **factor** ( ( - | + ) **factor** )*
+**exprStmt** → **expression** ";"
 
-**factor** → **unary** ( ( / | * ) **unary** )*
+**printStmt** → "print" **expression** ";"
 
-**unary** → ( ! | - ) **unary** | **primary**
+**expression** → **assignment**
 
-**primary** → NUMBER | STRING | true | false | nil | ( **expression** )
+**assignment** → IDENTIFIER "=" **assignment** | **ternary**
+
+**ternary** → **equality** "?" **equality** ":" **equality** | **equality**
+
+**equality** → **comparison** ( ( "!=" | "==" ) **comparison** )*
+
+**comparison** → **term** ( ( ">" | ">=" | "<" | "<=" ) **term** )*
+
+**term** → **factor** ( ( "-" | "+" ) **factor** )*
+
+**factor** → **unary** ( ( "/" | "\*" ) **unary** )*
+
+**unary** → ( "!" | "-" ) **unary** | **primary**
+
+**primary** → "true" | "false" | "nil" | NUMBER | STRING | "(" **expression** ")" | IDENTIFIER

@@ -1,4 +1,4 @@
-package tool;
+package tools;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,12 +13,20 @@ public class GenerateAst {
     }
     String outputDir = args[0];
     defineAst(outputDir, "Expr",
-              Arrays.asList("Binary   : Expr left, Token operator, Expr right",
-                            "Ternary : Token ternary_token, Expr comparison, " +
-                            "Expr true_expr, Expr false_expr",
+              Arrays.asList("Binary : Expr left, Token operator, Expr right",
+                            "Assign   : Token name, Expr value",
+                            "Ternary : Token ternary_token, Expr comparison, "
+                                + "Expr true_expr, Expr false_expr",
                             "Grouping : Expr expression",
-                            "Literal  : Object value",
-                            "Unary    : Token operator, Expr right"));
+                            "Literal : Object value",
+                            "Unary : Token operator, Expr right",
+                            "Variable : Token name"));
+
+    defineAst(outputDir, "Stmt",
+              Arrays.asList("Expression : Expr expression",
+                            "Block : List<Stmt> statements",
+                            "Print : Expr expression",
+                            "Var : Token name, Expr initializer"));
   }
 
   private static void defineAst(String outputDir, String baseName,
