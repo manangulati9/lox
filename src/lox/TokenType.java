@@ -49,7 +49,6 @@ enum TokenType {
   VAR,
   WHILE,
   BREAK,
-  CONTINUE,
 
   EOF
 }

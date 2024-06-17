@@ -8,7 +8,7 @@
 
 **varDecl** → "var" IDENTIFIER ( "=" **expression** )? ";"
 
-**statement** → **exprStmt** | **ifStmt** | **printStmt** | **whileStmt** | **forStmt** | **block**
+**statement** → **exprStmt** | **ifStmt** | **printStmt** | **whileStmt** | **forStmt** | **block** | **breakStmt**
 
 **ifStmt** → "if" "(" **expression** ")" **statement** ( "else" **statement** )?
 
@@ -19,6 +19,8 @@
 **forStmt** → "for" "(" ( **varDecl** | **exprStmt** | ";" ) **expression**? ";" **expression**? ")" **statement**
 
 **block** → "{" **declaration*** "}"
+
+**breakStmt** → "break" ";"
 
 **exprStmt** → **expression** ";"
 
