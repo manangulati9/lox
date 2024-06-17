@@ -1,4 +1,4 @@
 #!/bin/bash
 
 javac -d ../src/class ../src/lox/*.java
-java -cp ../src/class: lox.Lox "$1"
+java -cp ../src/class: lox.Lox ../scripts/test.lox

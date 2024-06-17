@@ -8,19 +8,29 @@
 
 **varDecl** → "var" IDENTIFIER ( "=" **expression** )? ";"
 
-**statement** → **exprStmt** | **printStmt** | **block**
+**statement** → **exprStmt** | **ifStmt** | **printStmt** | **whileStmt** | **forStmt** | **block**
+
+**ifStmt** → "if" "(" **expression** ")" **statement** ( "else" **statement** )?
+
+**printStmt** → "print" **expression** ";"
+
+**whileStmt** → "while" "(" **expression** ")" **statement**
+
+**forStmt** → "for" "(" ( **varDecl** | **exprStmt** | ";" ) **expression**? ";" **expression**? ")" **statement**
 
 **block** → "{" **declaration*** "}"
 
 **exprStmt** → **expression** ";"
 
-**printStmt** → "print" **expression** ";"
-
 **expression** → **assignment**
 
 **assignment** → IDENTIFIER "=" **assignment** | **ternary**
 
-**ternary** → **equality** "?" **equality** ":" **equality** | **equality**
+**ternary** → **logic_or** "?" **logic_or** ":" **logic_or** | **logic_or**
+
+**logic_or** → **logic_and** ( "or" **logic_and** )*
+
+**logic_and** → **equality** ( "and" **equality** )*
 
 **equality** → **comparison** ( ( "!=" | "==" ) **comparison** )*
 

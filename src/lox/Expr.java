@@ -8,6 +8,7 @@ abstract class Expr {
     R visitAssignExpr(Assign expr);
     R visitTernaryExpr(Ternary expr);
     R visitGroupingExpr(Grouping expr);
+    R visitLogicalExpr(Logical expr);
     R visitLiteralExpr(Literal expr);
     R visitUnaryExpr(Unary expr);
     R visitVariableExpr(Variable expr);
@@ -46,8 +47,7 @@ abstract class Expr {
   }
 
   static class Ternary extends Expr {
-    Ternary(Token ternary_token, Expr comparison, Expr true_expr,
-            Expr false_expr) {
+    Ternary(Token ternary_token, Expr comparison, Expr true_expr, Expr false_expr) {
       this.ternary_token = ternary_token;
       this.comparison = comparison;
       this.true_expr = true_expr;
@@ -66,7 +66,9 @@ abstract class Expr {
   }
 
   static class Grouping extends Expr {
-    Grouping(Expr expression) { this.expression = expression; }
+    Grouping(Expr expression) {
+      this.expression = expression;
+    }
 
     @Override
     <R> R accept(Visitor<R> visitor) {
@@ -76,8 +78,27 @@ abstract class Expr {
     final Expr expression;
   }
 
+  static class Logical extends Expr {
+    Logical(Expr left, Token operator, Expr right) {
+      this.left = left;
+      this.operator = operator;
+      this.right = right;
+    }
+
+    @Override
+    <R> R accept(Visitor<R> visitor) {
+      return visitor.visitLogicalExpr(this);
+    }
+
+    final Expr left;
+    final Token operator;
+    final Expr right;
+  }
+
   static class Literal extends Expr {
-    Literal(Object value) { this.value = value; }
+    Literal(Object value) {
+      this.value = value;
+    }
 
     @Override
     <R> R accept(Visitor<R> visitor) {
@@ -103,7 +124,9 @@ abstract class Expr {
   }
 
   static class Variable extends Expr {
-    Variable(Token name) { this.name = name; }
+    Variable(Token name) {
+      this.name = name;
+    }
 
     @Override
     <R> R accept(Visitor<R> visitor) {

@@ -30,6 +30,16 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
   }
 
   @Override
+  public Void visitIfStmt(Stmt.If stmt) {
+    if (isTruthy(evaluate(stmt.condition))) {
+      execute(stmt.thenBranch);
+    } else if (stmt.elseBranch != null) {
+      execute(stmt.elseBranch);
+    }
+    return null;
+  }
+
+  @Override
   public Object visitAssignExpr(Expr.Assign expr) {
     Object value = evaluate(expr.value);
     environment.assign(expr.name, value);
@@ -66,19 +76,35 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
   }
 
   @Override
-  public Object visitTernaryExpr(Expr.Ternary expr) {
-    Object comparison = evaluate(expr.comparison);
-    Object true_expr = evaluate(expr.true_expr);
-    Object false_expr = evaluate(expr.false_expr);
+  public Object visitLogicalExpr(Expr.Logical expr) {
+    Object left = evaluate(expr.left);
 
-    if (comparison instanceof Boolean) {
-      if ((boolean)comparison) {
-        return true_expr;
-      } else
-        return false_expr;
+    if (expr.operator.type == TokenType.OR) {
+      if (isTruthy(left))
+        return left;
+    } else {
+      if (!isTruthy(left))
+        return left;
     }
 
-    throw new RuntimeError(expr.ternary_token, "Expected a valid conditional.");
+    return evaluate(expr.right);
+  }
+
+  @Override
+  public Void visitWhileStmt(Stmt.While stmt) {
+    while (isTruthy(evaluate(stmt.condition))) {
+      execute(stmt.body);
+    }
+    return null;
+  }
+
+  @Override
+  public Object visitTernaryExpr(Expr.Ternary expr) {
+    if (isTruthy(evaluate(expr.comparison))) {
+      return evaluate(expr.true_expr);
+    } else {
+      return evaluate(expr.false_expr);
+    }
   }
 
   @Override
