@@ -11,6 +11,7 @@ abstract class Expr {
     R visitLogicalExpr(Logical expr);
     R visitLiteralExpr(Literal expr);
     R visitUnaryExpr(Unary expr);
+    R visitCallExpr(Call expr);
     R visitVariableExpr(Variable expr);
   }
 
@@ -47,7 +48,8 @@ abstract class Expr {
   }
 
   static class Ternary extends Expr {
-    Ternary(Token ternary_token, Expr comparison, Expr true_expr, Expr false_expr) {
+    Ternary(Token ternary_token, Expr comparison, Expr true_expr,
+            Expr false_expr) {
       this.ternary_token = ternary_token;
       this.comparison = comparison;
       this.true_expr = true_expr;
@@ -66,9 +68,7 @@ abstract class Expr {
   }
 
   static class Grouping extends Expr {
-    Grouping(Expr expression) {
-      this.expression = expression;
-    }
+    Grouping(Expr expression) { this.expression = expression; }
 
     @Override
     <R> R accept(Visitor<R> visitor) {
@@ -96,9 +96,7 @@ abstract class Expr {
   }
 
   static class Literal extends Expr {
-    Literal(Object value) {
-      this.value = value;
-    }
+    Literal(Object value) { this.value = value; }
 
     @Override
     <R> R accept(Visitor<R> visitor) {
@@ -123,10 +121,25 @@ abstract class Expr {
     final Expr right;
   }
 
-  static class Variable extends Expr {
-    Variable(Token name) {
-      this.name = name;
+  static class Call extends Expr {
+    Call(Expr callee, Token paren, List<Expr> arguments) {
+      this.callee = callee;
+      this.paren = paren;
+      this.arguments = arguments;
     }
+
+    @Override
+    <R> R accept(Visitor<R> visitor) {
+      return visitor.visitCallExpr(this);
+    }
+
+    final Expr callee;
+    final Token paren;
+    final List<Expr> arguments;
+  }
+
+  static class Variable extends Expr {
+    Variable(Token name) { this.name = name; }
 
     @Override
     <R> R accept(Visitor<R> visitor) {

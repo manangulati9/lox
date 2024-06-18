@@ -12,22 +12,26 @@ public class GenerateAst {
       System.exit(64);
     }
     String outputDir = args[0];
-    defineAst(outputDir, "Expr",
-              Arrays.asList("Binary : Expr left, Token operator, Expr right",
-                            "Assign   : Token name, Expr value",
-                            "Ternary : Token ternary_token, Expr comparison, "
-                                + "Expr true_expr, Expr false_expr",
-                            "Grouping : Expr expression",
-                            "Logical : Expr left, Token operator, Expr right",
-                            "Literal : Object value",
-                            "Unary : Token operator, Expr right",
-                            "Variable : Token name"));
+    defineAst(
+        outputDir, "Expr",
+        Arrays.asList("Binary : Expr left, Token operator, Expr right",
+                      "Assign : Token name, Expr value",
+                      "Ternary : Token ternary_token, Expr comparison, Expr "
+                          + "true_expr, Expr false_expr",
+                      "Grouping : Expr expression",
+                      "Logical : Expr left, Token operator, Expr right",
+                      "Literal : Object value",
+                      "Unary : Token operator, Expr right",
+                      "Call : Expr callee, Token paren, List<Expr> arguments",
+                      "Variable : Token name"));
 
     defineAst(outputDir, "Stmt",
               Arrays.asList(
                   "Expression : Expr expression", "Break : ",
+                  "Function : Token name, List<Token> params, List<Stmt> body",
                   "If : Expr condition, Stmt thenBranch, Stmt elseBranch",
                   "Block : List<Stmt> statements", "Print : Expr expression",
+                  "Return : Token keyword, Expr value",
                   "Var : Token name, Expr initializer",
                   "While : Expr condition, Stmt body"));
   }

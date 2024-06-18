@@ -47,7 +47,7 @@ scripts/run.sh
 To execute a Lox script, run the compile script with a lox script.
 
 ```bash
-scripts/compile.sh path/to/script.lox
+scripts/interpret.sh path/to/script.lox
 ```
 
 ## Examples
