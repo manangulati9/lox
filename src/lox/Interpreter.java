@@ -1,11 +1,14 @@
 package lox;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
   private static class BreakException extends RuntimeException {}
   final Environment globals = new Environment();
+  private final Map<Expr, Integer> locals = new HashMap<>();
   private Environment environment = globals;
 
   Interpreter() {
@@ -71,7 +74,12 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
   @Override
   public Object visitAssignExpr(Expr.Assign expr) {
     Object value = evaluate(expr.value);
-    environment.assign(expr.name, value);
+    Integer distance = locals.get(expr);
+    if (distance != null) {
+      environment.assignAt(distance, expr.name, value);
+    } else {
+      globals.assign(expr.name, value);
+    }
     return value;
   }
 
@@ -83,7 +91,7 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
   @Override
   public Object visitVariableExpr(Expr.Variable expr) {
-    return environment.get(expr.name);
+    return lookUpVariable(expr.name, expr);
   }
 
   @Override
@@ -251,6 +259,8 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
   private void execute(Stmt stmt) { stmt.accept(this); }
 
+  void resolve(Expr expr, int depth) { locals.put(expr, depth); }
+
   void executeBlock(List<Stmt> statements, Environment environment) {
     Environment previous = this.environment;
     try {
@@ -307,5 +317,14 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     }
 
     return object.toString();
+  }
+
+  private Object lookUpVariable(Token name, Expr expr) {
+    Integer distance = locals.get(expr);
+    if (distance != null) {
+      return environment.getAt(distance, name.lexeme);
+    } else {
+      return globals.get(name);
+    }
   }
 }
