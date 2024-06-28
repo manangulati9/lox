@@ -15,6 +15,7 @@ enum TokenType {
   SLASH,
   STAR,
   QUESTION_MARK,
+  MODULO,
 
   // One or two character tokens.
   BANG,

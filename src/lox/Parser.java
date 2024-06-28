@@ -294,7 +294,7 @@ class Parser {
   private Expr factor() {
     Expr expr = unary();
 
-    while (match(SLASH, STAR)) {
+    while (match(SLASH, STAR, MODULO)) {
       Token operator = previous();
       Expr right = unary();
       expr = new Expr.Binary(expr, operator, right);
@@ -421,6 +421,7 @@ class Parser {
       case WHILE:
       case PRINT:
       case RETURN:
+      case BREAK:
         return;
       default:
         break;

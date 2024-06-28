@@ -83,6 +83,9 @@ class Scanner {
     case '+':
       addToken(PLUS);
       break;
+    case '%':
+      addToken(MODULO);
+      break;
     case ';':
       addToken(SEMICOLON);
       break;

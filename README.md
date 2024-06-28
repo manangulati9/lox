@@ -1,6 +1,6 @@
 # Lox
 
-Lox is a small programming language with a C-inspired syntax, implemented in Java. This project is designed to demonstrate the creation and execution of a simple programming language, covering parsing, interpreting, and error handling.
+Lox is a small programming language implemented in Java. This project is designed to demonstrate the creation and execution of a simple programming language, covering parsing, interpreting, and error handling.
 
 ## Table of Contents
 
@@ -14,20 +14,23 @@ Lox is a small programming language with a C-inspired syntax, implemented in Jav
 
 ## Features
 
-- **C-inspired Syntax:** Familiar syntax for those who have experience with C-like languages.
 - **Interpreted Language:** Executes directly from source code, allowing for quick testing and development.
+- **Garbage Collection**: Implements automatic memory management to handle memory cleanup, improving reliability and developer productivity.
+- **Modularity**: Supports modular programming with clear separation of concerns, facilitating code organization and reusability.
 - **Error Handling:** Robust error reporting for syntax and runtime errors.
 - **Extensible:** Designed to be easily extendable with additional features and improvements.
 
+
 ## Installation
 
-To use Lox, you need to have Java installed on your system. You can download it from the [official Java website](https://www.oracle.com/java/technologies/javase-downloads.html).
+**Docker** is needed to run the lox interpreter. Download docker from the [official website](https://docs.docker.com/get-docker/)
 
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/lox.git
+git clone https://github.com/manangulati9/lox.git
 cd lox
+docker build -t lox .
 ```
 
 ## Usage
@@ -36,18 +39,18 @@ You can run Lox in two modes: interactive (REPL) and script mode.
 
 ### Interactive Mode (REPL)
 
-To start the interactive shell, just run the bash script:
+To start the interactive shell, run the following command:
 
 ```bash
-scripts/run.sh
+docker run -it --rm lox
 ```
 
 ### Script Mode
 
-To execute a Lox script, run the compile script with a lox script.
+To execute a Lox script, run this command with a lox script.
 
 ```bash
-scripts/interpret.sh path/to/script.lox
+docker run --rm lox --file path_to_lox_script.lox
 ```
 
 ## Examples
@@ -64,6 +67,10 @@ print "Hello, World!";
 var a = 10;
 var b = 20;
 print a + b; // 30
+print a - b; // -10
+print a * b; // 200
+print a / b; // 0.5
+print a % b; // 10
 ```
 
 ### Functions
