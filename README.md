@@ -26,10 +26,12 @@ Lox is a small programming language implemented in Java. This project is designe
 **Docker** is needed to run the lox interpreter. Download docker from the [official website](https://docs.docker.com/get-docker/)
 
 ### Clone the Repository
-
 ```bash
 git clone https://github.com/manangulati9/lox.git
 cd lox
+```
+### Run docker build
+```bash
 docker build -t lox .
 ```
 
