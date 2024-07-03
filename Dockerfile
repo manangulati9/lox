@@ -6,4 +6,8 @@ COPY . .
 
 RUN javac -d ./src/class ./src/lox/*.java
 
-ENTRYPOINT [ "/app/bin/entry.sh" ]
+COPY ./bin/entry.sh .
+
+RUN chmod +x entry.sh
+
+ENTRYPOINT [ "/app/entry.sh" ]
