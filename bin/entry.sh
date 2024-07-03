@@ -11,4 +11,4 @@ if [ "$1" = "--file" ]; then
 	CMD="java -cp ./src/class: lox.Lox $2"
 fi
 
-exec $CMD
+exec "$CMD"
