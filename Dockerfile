@@ -6,4 +6,4 @@ COPY . .
 
 RUN javac -d ./src/class ./src/lox/*.java
 
-ENTRYPOINT [ "./bin/entry.sh" ]
+ENTRYPOINT [ "/app/bin/entry.sh" ]
