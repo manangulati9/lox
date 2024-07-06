@@ -52,7 +52,7 @@ docker run -it --rm lox
 To execute a Lox script, run this command with a lox script.
 
 ```bash
-docker run --rm lox --file path_to_lox_script.lox
+docker run --rm lox path_to_lox_script.lox
 ```
 
 ## Examples

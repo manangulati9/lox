@@ -1,10 +1,12 @@
 package lox;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
 import java.util.List;
 
@@ -15,10 +17,12 @@ public class Lox {
 
   public static void main(String[] args) throws IOException {
     if (args.length > 1) {
-      System.out.println("Usage: jlox [script]");
+      System.out.println("Usage: lox [script]");
       System.exit(64);
     } else if (args.length == 1) {
-      runFile(args[0]);
+      if (validateFilePath(args[0])) {
+        runFile(args[0]);
+      }
     } else {
       runPrompt();
     }
@@ -91,5 +95,45 @@ public class Lox {
     System.err.println(error.getMessage() + "\n[line " + error.token.line +
                        " column " + error.token.column + "]");
     hadRuntimeError = true;
+  }
+
+  public static boolean validateFilePath(String filePath) {
+    try {
+      // Check if the path is valid
+      Paths.get(filePath);
+    } catch (InvalidPathException e) {
+      System.out.println("Invalid path: " + filePath);
+      return false;
+    }
+
+    File file = new File(filePath);
+
+    // Check if the path exists
+    if (!file.exists()) {
+      System.out.println("Path does not exist: " + filePath);
+      return false;
+    }
+
+    // Check if it's a file or directory
+    if (!file.isFile()) {
+      System.out.println("Path is not a file: " + filePath);
+      return false;
+    }
+
+    // Check read/write permissions
+    if (!file.canRead()) {
+      System.out.println("Cannot read the file: " + filePath);
+      return false;
+    }
+
+    String fileName = file.getName();
+
+    int lastIndexOfDot = fileName.lastIndexOf('.');
+    if (lastIndexOfDot == -1) {
+      return false; // No extension found
+    }
+
+    String fileExtension = fileName.substring(lastIndexOfDot + 1);
+    return fileExtension.equalsIgnoreCase("lox");
   }
 }

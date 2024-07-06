@@ -4,10 +4,6 @@ WORKDIR /app
 
 COPY . .
 
-RUN javac -d ./src/class ./src/lox/*.java
+RUN javac -d src/class src/lox/*.java
 
-COPY ./bin/entry.sh .
-
-RUN chmod +x entry.sh
-
-ENTRYPOINT [ "/app/entry.sh" ]
+ENTRYPOINT [ "java", "-cp", "src/class:", "lox.Lox" ]
