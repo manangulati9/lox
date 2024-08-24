@@ -14,8 +14,9 @@ Lox is a small programming language implemented in Java. This project is designe
 
 ## Features
 
-- **Interpreted Language:** Executes directly from source code, allowing for quick testing and development.
-- **Garbage Collection**: Implements automatic memory management to handle memory cleanup, improving reliability and developer productivity.
+- **Dynamic Typing:** Lox is dynamically typed, meaning variables can store values of any type, and a single variable can even store values of different types at different times.
+- **Turing completeness:** Lox is turing complete and therefore has capability to perform any computation that can be described algorithmically, given enough time and resources.
+- **Automatic memory management**: Uses Java's garbage collector for automatic memory management to handle memory cleanup, improving reliability and developer productivity.
 - **Modularity**: Supports modular programming with clear separation of concerns, facilitating code organization and reusability.
 - **Error Handling:** Robust error reporting for syntax and runtime errors.
 - **Extensible:** Designed to be easily extendable with additional features and improvements.
@@ -55,46 +56,124 @@ To execute a Lox script, run this command with a lox script.
 docker run --rm lox path_to_lox_script.lox
 ```
 
-## Examples
+## Syntax and Constructs
 
-### Hello, World!
+### Data types
 
-```c
+- **Numbers**
+- **Strings**
+- **Booleans**
+- **Nil**
+
+### Expressions
+
+An expression's main job is to produce a value. This value is then stored in variables.
+
+#### - Arithmetic:
+```
+less < than;
+lessThan <= orEqual;
+greater > than;
+greaterThan >= orEqual;
+```
+
+#### - Comparisons:
+```
+1 == 2;         // false.
+"cat" != "dog"; // true.
+314 == "pi"; // false.
+123 == "123"; // false.
+```
+
+#### - Logical operators:
+```
+!true;  // false.
+!false; // true.
+true and false; // false.
+true and true;  // true.
+false or false; // false.
+true or false;  // true.
+```
+#### - Precedence and Grouping:
+All of these operators have the same precedence and associativity that you’d expect coming from C.
+```javascript
+var average = (min + max) / 2;
+```
+
+### Statements
+A statement's main job is to product a side effect, unlike an expression. Since, by definition, statements don’t evaluate to a value, to be useful they have to otherwise change the world in some way—usually modifying some state, reading input, or producing output.
+
+```
+"some expression";
+```
+
+```javascript
 print "Hello, World!";
+```
+
+```javascript
+{
+  print "One statement.";
+  print "Two statements.";
+}
 ```
 
 ### Variables
 
-```c
-var a = 10;
-var b = 20;
-print a + b; // 30
-print a - b; // -10
-print a * b; // 200
-print a / b; // 0.5
-print a % b; // 10
+```javascript
+var imAVariable = "here is my value";
+var iAmNil;
+var breakfast = "bagels";
+print breakfast; // "bagels".
+breakfast = "beignets";
+print breakfast; // "beignets".
+```
+
+### Control Flow
+
+#### - Conditionals:
+```javascript
+if (condition) {
+  print "yes";
+} else {
+  print "no";
+}
+```
+#### - Loops:
+```javascript
+var a = 1;
+while (a < 10) {
+  print a;
+  a = a + 1;
+}
+
+for (var a = 1; a < 10; a = a + 1) {
+  print a;
+}
 ```
 
 ### Functions
-
-```c
+```javascript
 fun sayHello(name) {
   print "Hello, " + name + "!";
 }
 
 sayHello("Lox");
 ```
+#### - Closures:
+```javascript
+fun returnFunction() {
+  var outside = "outside";
 
-### Control Flow
+  fun inner() {
+    print outside;
+  }
 
-```c
-var x = 10;
-
-if (x > 5) {
-  print "x is greater than 5";
-} else {
-  print "x is not greater than 5";
+  return inner;
 }
+
+var fn = returnFunction();
+fn();
 ```
 
 ## Development
