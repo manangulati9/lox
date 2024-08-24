@@ -1,13 +1,13 @@
 # Lox
 
-Lox is a small programming language implemented in Java. This project is designed to demonstrate the creation and execution of a simple programming language, covering parsing, interpreting, and error handling.
+Lox is a programming language implemented in Java. This project is designed to demonstrate the creation and execution of a simple programming language, covering parsing, interpreting, and error handling.
 
 ## Table of Contents
 
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Examples](#examples)
+- [Language Constructs](#language-constructs)
 - [Development](#development)
 - [Contributing](#contributing)
 - [License](#license)
@@ -56,7 +56,7 @@ To execute a Lox script, run this command with a lox script.
 docker run --rm lox path_to_lox_script.lox
 ```
 
-## Syntax and Constructs
+## Language Constructs
 
 ### Data types
 
